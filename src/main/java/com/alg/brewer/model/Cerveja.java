@@ -13,9 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import com.alg.brewer.validation.SKU;
 
 @Entity
 @Table(name= "cerveja")
@@ -27,30 +32,46 @@ public class Cerveja implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@SKU
 	@NotBlank(message = "Sku é obrigatório")
 	private String sku;
 
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 
+	@NotBlank(message = "A descrição é obrigatória")
 	@Size(min = 1, max = 50)
 	private String descricao;
 	
 	@Column(name= "valor")
+	@NotNull(message = "O valor é obrigatório")
+	@DecimalMin("0.01")
+	@DecimalMax(value = "9999999.99", message = "Valor não pode ser maior que R$ 9999999,99")
 	private BigDecimal valor;
 	
+	@NotNull(message = "O teor alcóolico é obrigatório")
+	@DecimalMax(value = "100.0", message = "O valor do Teor Alcólico não pode ser superior a R$ 100,00")
 	@Column(name= "teor_alcoolico")
 	private BigDecimal teorAlcoolico;
 	
+	@NotNull(message = "A quantidade de estoque é obrigatório")
+	@Column(name= "quantidade_estoque")
+	private Integer quantidadeEstoque;
+	
+	@NotNull(message = "A Comissão é obrigatória")
+	@DecimalMax(value = "100.0", message = "Comissão não pode ser superior a R$100,00")
 	@Column(name= "comissao")
 	private BigDecimal comissao;
 	
+	@NotNull(message = "Origem é obrigatória")
 	@Enumerated(EnumType.STRING)
 	private Origem origem;
 	
+	@NotNull(message = "Sabor é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private Sabor sabor;
 	
+	@NotNull(message = "O estilo é obrigatório")
 	@ManyToOne
 	@JoinColumn(name = "id_estilo")
 	private Estilo estilo;
@@ -114,6 +135,12 @@ public class Cerveja implements Serializable {
 	}
 	public void setEstilo(Estilo estilo) {
 		this.estilo = estilo;
+	}
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	@Override
 	public int hashCode() {
