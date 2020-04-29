@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -75,6 +77,16 @@ public class Cerveja implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_estilo")
 	private Estilo estilo;
+	
+	private String foto;
+
+	@Column(name = "content_type")
+	private String contentType;
+	
+	@PrePersist @PreUpdate
+	private void prePersiste() {
+		sku = sku.toUpperCase();
+	}
 	
 	public String getSku() {
 		return sku;
@@ -142,6 +154,23 @@ public class Cerveja implements Serializable {
 	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
+	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
