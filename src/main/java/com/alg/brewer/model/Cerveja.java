@@ -158,6 +158,10 @@ public class Cerveja implements Serializable {
 	public String getFoto() {
 		return foto;
 	}
+	
+	public String getFotoOuMock() {
+		return foto.isEmpty() ? "cerveja-mock.png" : foto;
+	}
 
 	public void setFoto(String foto) {
 		this.foto = foto;
