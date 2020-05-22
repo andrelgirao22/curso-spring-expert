@@ -1,4 +1,4 @@
-package com.alg.brewer.repositories.helper.cerveja;
+package com.alg.brewer.repositories.helper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
