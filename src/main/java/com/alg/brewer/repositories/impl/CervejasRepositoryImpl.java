@@ -1,4 +1,4 @@
-package com.alg.brewer.repositories.helper;
+package com.alg.brewer.repositories.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.repositories.filter.CervejaFilter;
+import com.alg.brewer.repositories.helper.CervejasQueries;
 import com.alg.brewer.repositories.paginacao.PaginacaoUtil;
 
 public class CervejasRepositoryImpl implements CervejasQueries {

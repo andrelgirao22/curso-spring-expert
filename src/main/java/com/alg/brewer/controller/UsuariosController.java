@@ -12,7 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alg.brewer.model.Usuario;
+import com.alg.brewer.repositories.GruposRepository;
 import com.alg.brewer.service.CadastroUsuarioService;
+import com.alg.brewer.service.exception.SenhaObrigatoriaUsuarioException;
 import com.alg.brewer.service.exception.UsuarioException;
 
 @RequestMapping(value = "/usuarios")
@@ -21,10 +23,14 @@ public class UsuariosController {
 	
 	@Autowired
 	private CadastroUsuarioService service;
+	
+	@Autowired
+	private GruposRepository gruposRepository;
 
 	@GetMapping(value = "/novo")
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView modelAndView = new ModelAndView("usuario/CadastroUsuario");
+		modelAndView.addObject("grupos", gruposRepository.findAll());
 		
 		return modelAndView;
 	}
@@ -40,6 +46,9 @@ public class UsuariosController {
 			this.service.salvar(usuario);
 		} catch(UsuarioException e) {
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			return novo(usuario);
+		} catch(SenhaObrigatoriaUsuarioException se) {
+			result.rejectValue("senha", se.getMessage(), se.getMessage());
 			return novo(usuario);
 		}
 		attr.addFlashAttribute("mensagem", "Usuário cadastrado com sucesso");

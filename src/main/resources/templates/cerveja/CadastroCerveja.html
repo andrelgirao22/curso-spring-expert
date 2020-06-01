@@ -36,7 +36,7 @@
 	<div class="container-fluid">
 	
 		
-		<form method="post" th:object="${cerveja}" class="form-vertical  js-form-loading">
+		<form method="post" th:object="${cerveja}" class="form-vertical  js-form-loading" th:action="@{/cervejas/novo}">
 		
 			<brewer:message/>
 			
@@ -61,8 +61,9 @@
 			<div class="row">
 				<div class="col-sm-3 form-group bw-required"  brewer:classforerror="estilo">
 					<label for="estilo" class="control-label">Estilo</label>
+					
 					<div class="bw-field-action">
-						<select id="estilo" class="form-control" placeholder="R$" th:field="*{estilo}">
+						<select id="estilo" class="form-control" th:field="*{estilo}">
 							<option value="">Selecione o estilo</option>
 							<option th:each="estilo: ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}"></option>
 						</select>
@@ -72,6 +73,7 @@
 							</a>
 						</div>
 					</div>
+					
 				</div>
 
 				<div class="col-sm-3 form-group bw-required"  brewer:classforerror="sabor">

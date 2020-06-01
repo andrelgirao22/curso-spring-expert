@@ -29,6 +29,7 @@ Brewer.EstiloCadastroRapido = (function() {
 	}
 	
 	function onBotaoSalvarClick() {
+		console.log("cliquei aqui")
 		var nomeEstilo = this.inputNomeEstilo.val().trim();
 		$.ajax({
 			url: this.url,
@@ -57,3 +58,8 @@ Brewer.EstiloCadastroRapido = (function() {
 	return EstiloCadastroRapido;
 	
 }());
+
+$(function() {
+	var estiloCadastroRapido = new Brewer.EstiloCadastroRapido();
+	estiloCadastroRapido.iniciar();
+});

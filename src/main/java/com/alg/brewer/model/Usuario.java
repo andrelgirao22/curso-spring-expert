@@ -3,6 +3,7 @@ package com.alg.brewer.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -52,11 +54,12 @@ public class Usuario implements Serializable {
 	private LocalDate dataNascimento;
 	
 	@ManyToMany
-	//@NotNull(message = "Selecione pelo meno um grupo")
+	@Size(min =1, message = "Selecione pelo meno um grupo")
 	@JoinTable(name="usuario_grupo" , 
 		joinColumns = @JoinColumn(name = "codigo_usuario"), 
 		inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))
 	private List<Grupo> grupos;
+	
 	
 	public Long getCodigo() {
 		return codigo;
@@ -105,6 +108,9 @@ public class Usuario implements Serializable {
 	}
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+	public boolean isNovo() {
+		return this.codigo == null;
 	}
 	@Override
 	public int hashCode() {
