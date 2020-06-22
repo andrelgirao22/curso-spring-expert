@@ -1,5 +1,7 @@
 package com.alg.brewer.repositories.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.alg.brewer.dto.CervejaDTO;
 import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.repositories.filter.CervejaFilter;
 import com.alg.brewer.repositories.helper.CervejasQueries;
@@ -83,6 +86,18 @@ public class CervejasRepositoryImpl implements CervejasQueries {
 
 	private boolean isEstiloPresente(CervejaFilter filtro) {
 		return filtro.getEstilo() != null && filtro.getEstilo().getId() != null;
+	}
+
+	@Override
+	public List<CervejaDTO> porSkuOuNome(String skuOuNome) {
+		String jpql = "select new com.alg.brewer.dto.CervejaDTO(id, sku, nome, origem, valor, foto) "
+				+ "from Cerveja where lower(sku) like lower(:skuOuNome) or lower(nome) like lower(:skuOuNome)";
+		List<CervejaDTO> cervejasListadas = this.manager.createQuery(jpql, CervejaDTO.class)
+				.setParameter("skuOuNome", skuOuNome + "%")
+				.getResultList();
+		
+		
+		return cervejasListadas;
 	}
 
 }

@@ -30,7 +30,7 @@ import com.alg.brewer.service.exception.CidadeException;
 
 @Controller
 @RequestMapping("/cidades")
-public class CidadeController {
+public class CidadesController {
 
 	@Autowired
 	private CadastroCidadeService cidadesService;
@@ -40,7 +40,7 @@ public class CidadeController {
 	
 	@GetMapping
 	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result, 
-			@PageableDefault(size = 2) Pageable pageable,
+			@PageableDefault(size = 4) Pageable pageable,
 			HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView("cidade/PesquisaCidades");
 		
@@ -78,7 +78,8 @@ public class CidadeController {
 	public ModelAndView salvar(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			return novo(cidade);
+			//return novo(cidade);
+			throw new RuntimeException("erro");
 		}
 		
 		try {

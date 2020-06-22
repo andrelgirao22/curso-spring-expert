@@ -2,8 +2,6 @@ package com.alg.brewer.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,11 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -27,6 +26,7 @@ import com.alg.brewer.model.validation.AtributoConfirmacao;
 @AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha", message = "Confirmação da senha não confere")
 @Entity
 @Table(name = "usuario")
+@DynamicUpdate
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -59,7 +59,12 @@ public class Usuario implements Serializable {
 		joinColumns = @JoinColumn(name = "codigo_usuario"), 
 		inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))
 	private List<Grupo> grupos;
+
 	
+	@PreUpdate
+	public void preUpdate() {
+		this.confirmacaoSenha = senha;
+	}
 	
 	public Long getCodigo() {
 		return codigo;
