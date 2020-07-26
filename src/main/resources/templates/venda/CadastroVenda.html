@@ -10,7 +10,6 @@
 	
 	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>
 	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>
-	
 </head>
 
 <section layout:fragment="conteudo">
@@ -67,10 +66,10 @@
 					<label class="control-label" for="nomeCliente">Cliente</label>
 					<div class="input-group">
 				      <input id="nomeCliente" type="text" readonly="readonly" class="form-control" placeholder="Clique na lupa para pesquisar o cliente"/>
-				      <input id="codigoCliente" type="hidden" />
+				      <input id="codigoCliente" type="hidden"/>
 				      <span class="input-group-btn">
-				        <button class="btn  btn-default  js-tooltip" type="button" 
-				        	title="Pesquisa avançada" data-toggle="modal" data-target="#pesquisaRapidaClientes">
+				        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa avançada"
+				        		data-toggle="modal" data-target="#pesquisaRapidaClientes" >
 				        	<i class="glyphicon  glyphicon-search"></i>
 				        </button>
 				      </span>
@@ -108,13 +107,12 @@
 
 					<div class="row">
 						<div class="form-group  col-lg-12">
-							<input type="text" class="form-control js-sku-nome-cerveja-input" id="cerveja" 
+							<input type="text" class="form-control  js-sku-nome-cerveja-input" id="cerveja" 
 								placeholder="Pesquise e adicione a cerveja pelo SKU ou nome" autofocus="autofocus" />
 						</div>
 					</div>
 					
 					<div class="bw-tabela-cervejas">
-						<div class="bw-tabela-cervejas">
 						<div class="bw-tabela-item">
 							<div class="bw-tabela-item__coluna  bw-tabela-item__coluna--foto">
 								<img th:src="@{/fotos/thumbnail.cerveja-mock.png}" class="img-responsive"/>
@@ -136,11 +134,11 @@
 						
 						</div>
 					
-						<!-- div class="bw-tabela-cervejas__vazio">
+						<!-- <div class="bw-tabela-cervejas__vazio">
 							<i class="glyphicon  glyphicon-shopping-cart"></i> 
 							<span>Você ainda não adicionou nenhuma cerveja.</span>
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 				</div>
 				
 				<div class="tab-pane" id="entrega">
@@ -187,7 +185,6 @@
 	
 	<th:block th:replace="cliente/PesquisaRapidaClientes :: pesquisaRapidaClientes"></th:block>
 	<th:block th:replace="hbs/TemplateAutocompleteCerveja"></th:block>
-	
 </section>
 
 <th:block layout:fragment="javascript-extra">
@@ -202,7 +199,7 @@
 			$(this).tab('show');
 		});
 	});
-</script>
+	</script>
 </th:block>
 
 </html>
