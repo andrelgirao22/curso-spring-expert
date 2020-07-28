@@ -31,12 +31,16 @@ public class VendasController {
 	}
 	
 	@PostMapping("/item")
-	public @ResponseBody String adicionarItem(Long codigoCerveja) {
+	public ModelAndView adicionarItem(Long codigoCerveja) {
 		Cerveja cerveja = this.cervejasRepository.findOne(codigoCerveja);
 		
 		this.tabelaItensVenda.adicionarItem(cerveja, 1);
 		System.out.println(">>>> total de itens " + this.tabelaItensVenda.total());
-		return "Item adicionado!";
+		
+		ModelAndView modelAndView = new ModelAndView("venda/TabelaItensVenda");
+		modelAndView.addObject("itens", this.tabelaItensVenda.getItens());
+		
+		return modelAndView;
 		
 	}
 	
