@@ -42,10 +42,12 @@ public class TabelaItensVendaTest {
 	public void deveCalcularValorTotalComVariosItens() throws Exception {
 		
 		Cerveja c1 = new Cerveja();
+		c1.setId(1l);
 		BigDecimal v1 = new BigDecimal("8.90");
 		c1.setValor(v1);
 		
 		Cerveja c2 = new Cerveja();
+		c2.setId(2L);
 		BigDecimal v2 = new BigDecimal("4.99");
 		c2.setValor(v2);
 	
@@ -53,6 +55,32 @@ public class TabelaItensVendaTest {
 		this.tabelaItensVenda.adicionarItem(c2,2);
 		
 		assertEquals(new BigDecimal("18.88"), tabelaItensVenda.getValorTotal());
+	}
+	
+	@Test
+	public void deveManterTamanhoDaListaParaMesmosItens() throws Exception {
+		
+		Cerveja c1 = new Cerveja();
+		c1.setId(1L);
+		c1.setValor(new BigDecimal("4.50"));
+		
+		this.tabelaItensVenda.adicionarItem(c1,1);
+		this.tabelaItensVenda.adicionarItem(c1,1);
+		
+		assertEquals(1, tabelaItensVenda.getItens().size());
+		
+	}
+	
+	@Test
+	public void deveAlterarQuantidadeDoItem( ) throws Exception {
+		Cerveja c1 = new Cerveja();
+		c1.setId(1L);
+		c1.setValor(new BigDecimal("4.50"));
+		
+		this.tabelaItensVenda.adicionarItem(c1,1);
+		this.tabelaItensVenda.alterarQuantidade(c1, 3);
+		
+		assertEquals(new BigDecimal("13.50"), tabelaItensVenda.getValorTotal());
 	}
 	
 }

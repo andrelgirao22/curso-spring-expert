@@ -3,7 +3,9 @@ package com.alg.brewer.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +44,16 @@ public class VendasController {
 		
 		return modelAndView;
 		
+	}
+	
+	@PutMapping("/item/{codigoCerveja}")
+	public ModelAndView alterarQuantidade(@PathVariable Long codigoCerveja, Integer quantidade) {
+		Cerveja cerveja = cervejasRepository.findOne(codigoCerveja);
+		tabelaItensVenda.alterarQuantidade(cerveja, quantidade);
+		
+		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
+		mv.addObject("itens", tabelaItensVenda.getItens());
+		return mv;
 	}
 	
 }
