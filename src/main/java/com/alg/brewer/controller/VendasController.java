@@ -2,6 +2,7 @@ package com.alg.brewer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,25 +36,26 @@ public class VendasController {
 	@PostMapping("/item")
 	public ModelAndView adicionarItem(Long codigoCerveja) {
 		Cerveja cerveja = this.cervejasRepository.findOne(codigoCerveja);
-		
 		this.tabelaItensVenda.adicionarItem(cerveja, 1);
-		System.out.println(">>>> total de itens " + this.tabelaItensVenda.total());
-		
-		ModelAndView modelAndView = new ModelAndView("venda/TabelaItensVenda");
-		modelAndView.addObject("itens", this.tabelaItensVenda.getItens());
-		
-		return modelAndView;
-		
+		return mvTabelaVendas();
 	}
 	
 	@PutMapping("/item/{codigoCerveja}")
-	public ModelAndView alterarQuantidade(@PathVariable Long codigoCerveja, Integer quantidade) {
-		Cerveja cerveja = cervejasRepository.findOne(codigoCerveja);
+	public ModelAndView alterarQuantidade(@PathVariable("codigoCerveja") Cerveja cerveja, Integer quantidade) {
 		tabelaItensVenda.alterarQuantidade(cerveja, quantidade);
-		
+		return mvTabelaVendas();
+	}
+	
+	
+	@DeleteMapping("/item/{codigoCerveja}")
+	public ModelAndView excluirItem(@PathVariable("codigoCerveja") Cerveja cerveja) {
+		tabelaItensVenda.excluirItem(cerveja);
+		return mvTabelaVendas();
+	}
+
+	private ModelAndView mvTabelaVendas() {
 		ModelAndView mv = new ModelAndView("venda/TabelaItensVenda");
 		mv.addObject("itens", tabelaItensVenda.getItens());
 		return mv;
 	}
-	
 }

@@ -16,9 +16,7 @@ public class TabelaItensVendaTest {
 	
 	@Before
 	public void setup() {
-		
 		this.tabelaItensVenda = new TabelaItensVenda();
-		
 	}
 	
 	@Test
@@ -81,6 +79,30 @@ public class TabelaItensVendaTest {
 		this.tabelaItensVenda.alterarQuantidade(c1, 3);
 		
 		assertEquals(new BigDecimal("13.50"), tabelaItensVenda.getValorTotal());
+	}
+	
+	@Test
+	public void deveExluirItem() throws Exception {
+		Cerveja c1 = new Cerveja();
+		c1.setId(1L);
+		c1.setValor(new BigDecimal("4.50"));
+		
+		Cerveja c2 = new Cerveja();
+		c2.setId(2L);
+		c2.setValor(new BigDecimal("8.50"));
+		
+		Cerveja c3 = new Cerveja();
+		c3.setId(3L);
+		c3.setValor(new BigDecimal("5.50"));
+		
+		this.tabelaItensVenda.adicionarItem(c1,1);
+		this.tabelaItensVenda.adicionarItem(c2, 3);
+		this.tabelaItensVenda.adicionarItem(c3, 5);
+		
+		this.tabelaItensVenda.excluirItem(c3);
+		
+		assertEquals(2, tabelaItensVenda.total());
+		assertEquals(new BigDecimal("30.00"), tabelaItensVenda.getValorTotal());
 	}
 	
 }
