@@ -1,4 +1,4 @@
-package com.alg.brewer.venda;
+package com.alg.brewer.session;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ public class TabelaItensVendaTest {
 	
 	@Before
 	public void setup() {
-		this.tabelaItensVenda = new TabelaItensVenda();
+		this.tabelaItensVenda = new TabelaItensVenda("1");
 	}
 	
 	@Test

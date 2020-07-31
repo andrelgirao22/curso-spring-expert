@@ -71,4 +71,6 @@ public class ItemVenda {
 		return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
 	}
 	
+	
+	
 }
