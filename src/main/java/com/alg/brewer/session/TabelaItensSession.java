@@ -38,6 +38,10 @@ public class TabelaItensSession {
 		return getTabelaItensVenda(uuid).getItens();
 	}
 	
+	public Object getValorTotal(String uuid) {
+		return this.getTabelaItensVenda(uuid).getValorTotal();
+	}
+	
 	private TabelaItensVenda getTabelaItensVenda(String uuid) {
 		TabelaItensVenda tabelaItensVenda = this.tabelas.stream()
 				.filter(i -> i.getUuid().equals(uuid))
