@@ -1,10 +1,13 @@
 package com.alg.brewer.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name= "venda")
@@ -24,11 +28,11 @@ public class Venda {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
-	@Column(name = "datas_cricao")
+	@Column(name = "data_criacao")
 	private LocalDateTime dataCricao;
 	
 	@Column(name = "valor_frete")
-	private BigDecimal valorFrente;
+	private BigDecimal valorFrete;
 	
 	@Column(name = "valor_desconto")
 	private BigDecimal valorDesconto;
@@ -37,12 +41,12 @@ public class Venda {
 	private BigDecimal valorTotal;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusVenda status;
+	private StatusVenda status = StatusVenda.ORCAMENTO;
 	
 	private String observacao;
 	
-	@Column(name = "datas_entrega")
-	private LocalDateTime dataEntrega;
+	@Column(name = "data_hora_entrega")
+	private LocalDateTime dataHoraEntrega;
 	
 	@ManyToOne
 	@JoinColumn(name = "codigo_cliente")
@@ -52,8 +56,17 @@ public class Venda {
 	@JoinColumn(name = "codigo_usuario")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "venda")
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
 	private List<ItemVenda> itens = new ArrayList<ItemVenda>();
+	
+	@Transient
+	private String uuid;
+	
+	@Transient
+	private LocalDate dataEntrega;
+	
+	@Transient
+	private LocalTime horaEntrega;
 
 	public Long getCodigo() {
 		return codigo;
@@ -71,12 +84,12 @@ public class Venda {
 		this.dataCricao = dataCricao;
 	}
 
-	public BigDecimal getValorFrente() {
-		return valorFrente;
+	public BigDecimal getValorFrete() {
+		return valorFrete;
 	}
 
-	public void setValorFrente(BigDecimal valorFrente) {
-		this.valorFrente = valorFrente;
+	public void setValorFrete(BigDecimal valorFrete) {
+		this.valorFrete = valorFrete;
 	}
 
 	public BigDecimal getValorDesconto() {
@@ -111,12 +124,12 @@ public class Venda {
 		this.observacao = observacao;
 	}
 
-	public LocalDateTime getDataEntrega() {
-		return dataEntrega;
+	public LocalDateTime getDataHoraEntrega() {
+		return dataHoraEntrega;
 	}
 
-	public void setDataEntrega(LocalDateTime dataEntrega) {
-		this.dataEntrega = dataEntrega;
+	public void setDataHoraEntrega(LocalDateTime dataHoraEntrega) {
+		this.dataHoraEntrega = dataHoraEntrega;
 	}
 
 	public Cliente getCliente() {
@@ -143,6 +156,40 @@ public class Venda {
 		this.itens = itens;
 	}
 
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public LocalDate getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(LocalDate dataEntrega) {
+		this.dataEntrega = dataEntrega;
+	}
+
+	public LocalTime getHoraEntrega() {
+		return horaEntrega;
+	}
+
+	public void setHoraEntrega(LocalTime horaEntrega) {
+		this.horaEntrega = horaEntrega;
+	}
+	
+	public boolean isNova () {
+		return this.codigo == null;
+	}
+	
+
+	public void adicionarItens(List<ItemVenda> itens) {
+		this.itens = itens;
+		this.itens.forEach(i -> i.setVenda(this));
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,5 +214,6 @@ public class Venda {
 			return false;
 		return true;
 	}
+
 
 }
