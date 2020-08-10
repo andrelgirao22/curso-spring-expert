@@ -2,8 +2,6 @@ package com.alg.brewer.controller;
 
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -64,14 +62,11 @@ public class VendasController {
 		return mv;
 	}
 	
-	@PostMapping("/nova")
+	@PostMapping(value = "/nova", params = "salvar")
 	public ModelAndView salvar(Venda venda, BindingResult result, RedirectAttributes attributes, 
 			@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
 
-		venda.adicionarItens(this.tabelaItensSession.getItens(venda.getUuid()));
-		venda.calcularValorTotal();
-		
-		vendaValidador.validate(venda, result);
+		validarVenda(venda, result);
 		if(result.hasErrors()) {
 			return nova(venda);
 		}
@@ -80,6 +75,38 @@ public class VendasController {
 		
 		this.service.salvar(venda);
 		attributes.addFlashAttribute("mensagem", "Venda salva com sucesso");
+		return new ModelAndView("redirect:/vendas/nova");
+	}
+
+	@PostMapping(value = "/nova", params = "emitir")
+	public ModelAndView emitir(Venda venda, BindingResult result, RedirectAttributes attributes, 
+			@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+
+		validarVenda(venda, result);
+		if(result.hasErrors()) {
+			return nova(venda);
+		}
+		
+		venda.setUsuario(usuarioSistema.getUsuario());
+		
+		this.service.emitir(venda);
+		attributes.addFlashAttribute("mensagem", "Venda emitida com sucesso");
+		return new ModelAndView("redirect:/vendas/nova");
+	}
+	
+	@PostMapping(value = "/nova", params = "enviarEmail")
+	public ModelAndView enviarEmail(Venda venda, BindingResult result, RedirectAttributes attributes, 
+			@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+
+		validarVenda(venda, result);
+		if(result.hasErrors()) {
+			return nova(venda);
+		}
+		
+		venda.setUsuario(usuarioSistema.getUsuario());
+		
+		this.service.salvar(venda);
+		attributes.addFlashAttribute("mensagem", "Venda salva e email enviado");
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
@@ -101,6 +128,13 @@ public class VendasController {
 	public ModelAndView excluirItem(@PathVariable("codigoCerveja") Cerveja cerveja, @PathVariable("uuid") String uuid) {
 		tabelaItensSession.excluirItem(uuid, cerveja);
 		return mvTabelaVendas(uuid);
+	}
+	
+	private void validarVenda(Venda venda, BindingResult result) {
+		venda.adicionarItens(this.tabelaItensSession.getItens(venda.getUuid()));
+		venda.calcularValorTotal();
+		
+		vendaValidador.validate(venda, result);
 	}
 
 	private ModelAndView mvTabelaVendas(String uuid) {
