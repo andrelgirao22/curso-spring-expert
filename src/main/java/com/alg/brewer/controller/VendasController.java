@@ -2,7 +2,11 @@ package com.alg.brewer.controller;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -18,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.alg.brewer.controller.page.PageWrapper;
 import com.alg.brewer.controller.validator.VendaValidador;
 import com.alg.brewer.model.Cerveja;
+import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.CervejasRepository;
+import com.alg.brewer.repositories.filter.VendaFilter;
 import com.alg.brewer.security.UsuarioSistema;
 import com.alg.brewer.service.CadastroVendaService;
 import com.alg.brewer.session.TabelaItensSession;
@@ -42,9 +49,23 @@ public class VendasController {
 	@Autowired
 	private VendaValidador vendaValidador;
 	
-	@InitBinder
+	@InitBinder(value = "venda")
 	public void inicializarValidador(WebDataBinder binder) {
 		binder.setValidator(vendaValidador);
+	}
+	
+	@GetMapping
+	public ModelAndView pesquisar(VendaFilter vendaFilter, BindingResult result, 
+			@PageableDefault(size=3) Pageable pageable, HttpServletRequest request) {
+		
+		ModelAndView mv = new ModelAndView("venda/PesquisaVendas");
+		
+		
+		PageWrapper<Venda> paginaWrapper = new PageWrapper<Venda>(service.filtrar(vendaFilter, pageable), request);
+		mv.addObject("pagina", paginaWrapper);
+		mv.addObject("status", StatusVenda.values());
+		
+		return mv;
 	}
 	
 	@GetMapping("/nova")

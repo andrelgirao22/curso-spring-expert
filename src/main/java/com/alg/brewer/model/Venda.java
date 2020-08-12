@@ -30,7 +30,7 @@ public class Venda {
 	private Long codigo;
 	
 	@Column(name = "data_criacao")
-	private LocalDateTime dataCricao;
+	private LocalDateTime dataCriacao;
 	
 	@Column(name = "valor_frete")
 	private BigDecimal valorFrete;
@@ -77,12 +77,12 @@ public class Venda {
 		this.codigo = codigo;
 	}
 
-	public LocalDateTime getDataCricao() {
-		return dataCricao;
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
 	}
 
-	public void setDataCricao(LocalDateTime dataCricao) {
-		this.dataCricao = dataCricao;
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public BigDecimal getValorFrete() {

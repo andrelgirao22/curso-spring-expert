@@ -24,11 +24,16 @@
 		          </a>
 		      
 		          <ul class="aw-menu__list  aw-menu__list--sublist">
+		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/vendas/nova}">
+		            	<a th:href="@{/vendas/nova}">Nova venda</a>	
+		            </li>
+		            
 		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/vendas}">
-		            	<a th:href="@{/vendas/novo}">Nova venda</a>	
+		            	<a th:href="@{/vendas}">Pesquisa de vendas</a>	
 		            </li>
 		            
 		          </ul>
+		          
 		        </li>
 	
 		        <li class="aw-menu__item">
@@ -38,10 +43,10 @@
 		          </a>
 		      
 		          <ul class="aw-menu__list  aw-menu__list--sublist">
-		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/estilos}">
+		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/estilos.*}">
 		            	<a th:href="@{/estilos}">Estilos</a>	
 		            </li>
-		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/cervejas}">
+		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/cervejas.*}">
 		            	<a th:href="@{/cervejas}">Cervejas</a>
 		            </li>
 		          </ul>
@@ -54,13 +59,13 @@
 		          </a>
 	
 		          <ul class="aw-menu__list  aw-menu__list--sublist">
-		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/cidades}">
+		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/cidades.*}">
 		            	<a th:href="@{/cidades}">Cidades</a>
 	            	</li>
-		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/clientes}">
+		            <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/clientes.*}">
 		            	<a th:href="@{/clientes}">Clientes</a>
 	            	</li>
-	            	 <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/usuarios}">
+	            	 <li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/usuarios.*}">
 		            	<a th:href="@{/usuarios/novo}">Usuários</a>
 	            	</li>
 		          </ul>

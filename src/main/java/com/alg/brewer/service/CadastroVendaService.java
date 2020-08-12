@@ -4,12 +4,15 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.VendasRepository;
+import com.alg.brewer.repositories.filter.VendaFilter;
 
 @Service
 public class CadastroVendaService {
@@ -21,7 +24,7 @@ public class CadastroVendaService {
 	public void salvar(Venda venda) {
 		
 		if(venda.isNova()) {
-			venda.setDataCricao(LocalDateTime.now());
+			venda.setDataCriacao(LocalDateTime.now());
 		}
 		
 		if(venda.getDataEntrega() != null) {
@@ -36,6 +39,10 @@ public class CadastroVendaService {
 	public void emitir(Venda venda) {
 		venda.setStatus(StatusVenda.EMITIDA);
 		this.salvar(venda);
+	}
+
+	public Page<Venda> filtrar(VendaFilter vendaFilter, Pageable pageable) {
+		return repository.filtrar(vendaFilter, pageable);
 	}
 
 	
