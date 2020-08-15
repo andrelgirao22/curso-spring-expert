@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alg.brewer.controller.page.PageWrapper;
 import com.alg.brewer.controller.validator.VendaValidador;
+import com.alg.brewer.mail.Mailer;
 import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
@@ -49,6 +50,9 @@ public class VendasController {
 	@Autowired
 	private VendaValidador vendaValidador;
 	
+	@Autowired
+	private Mailer mailer;
+	
 	@InitBinder(value = "venda")
 	public void inicializarValidador(WebDataBinder binder) {
 		binder.setValidator(vendaValidador);
@@ -59,7 +63,6 @@ public class VendasController {
 			@PageableDefault(size=3) Pageable pageable, HttpServletRequest request) {
 		
 		ModelAndView mv = new ModelAndView("venda/PesquisaVendas");
-		
 		
 		PageWrapper<Venda> paginaWrapper = new PageWrapper<Venda>(service.filtrar(vendaFilter, pageable), request);
 		mv.addObject("pagina", paginaWrapper);
@@ -127,6 +130,9 @@ public class VendasController {
 		venda.setUsuario(usuarioSistema.getUsuario());
 		
 		this.service.salvar(venda);
+		
+		this.mailer.enviar(venda);
+		
 		attributes.addFlashAttribute("mensagem", "Venda salva e email enviado");
 		return new ModelAndView("redirect:/vendas/nova");
 	}

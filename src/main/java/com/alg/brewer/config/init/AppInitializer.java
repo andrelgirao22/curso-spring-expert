@@ -4,11 +4,11 @@ import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.alg.brewer.config.JpaConfig;
+import com.alg.brewer.config.MailConfig;
 import com.alg.brewer.config.SecurityConfig;
 import com.alg.brewer.config.ServiceConfig;
 import com.alg.brewer.config.WebConfig;
@@ -22,7 +22,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] { WebConfig.class };
+		return new Class<?>[] { WebConfig.class, MailConfig.class };
 	}
 
 	@Override
