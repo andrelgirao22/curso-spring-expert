@@ -33,10 +33,10 @@ public class Venda {
 	private LocalDateTime dataCriacao;
 	
 	@Column(name = "valor_frete")
-	private BigDecimal valorFrete;
+	private BigDecimal valorFrete = BigDecimal.ZERO;
 	
 	@Column(name = "valor_desconto")
-	private BigDecimal valorDesconto;
+	private BigDecimal valorDesconto = BigDecimal.ZERO;
 	
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal = BigDecimal.ZERO;
@@ -192,12 +192,16 @@ public class Venda {
 	}
 	
 	public void calcularValorTotal() {
-		BigDecimal valorTotalItens = this.getItens().stream()
+		BigDecimal valorTotalItens = getValorTotalItens();
+		
+		this.valorTotal = calcularValorTotal(valorTotalItens, this.getValorFrete(), this.getValorDesconto());
+	}
+
+	public BigDecimal getValorTotalItens() {
+		return this.getItens().stream()
 				.map(ItemVenda::getValorTotal)
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
-		
-		this.valorTotal = calcularValorTotal(valorTotalItens, this.getValorFrete(), this.getValorDesconto());
 	}
 	
 	private BigDecimal calcularValorTotal(BigDecimal valorTotalItens, BigDecimal valorFrente, BigDecimal valorDesconto) {

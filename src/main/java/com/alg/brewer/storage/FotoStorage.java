@@ -12,5 +12,9 @@ public interface FotoStorage {
 	void salvar(String foto);
 
 	byte[] recuperarFoto(String nome);
+
+	byte[] recuperarThumbnail(String nome);
+
+	void excluir(String foto);
 	
 }

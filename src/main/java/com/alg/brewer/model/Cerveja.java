@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import com.alg.brewer.validation.SKU;
 
@@ -173,6 +174,10 @@ public class Cerveja implements Serializable {
 
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	
+	public boolean temFoto() {
+		return !StringUtils.isEmpty(this.foto);
 	}
 
 	@Override

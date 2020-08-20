@@ -129,11 +129,11 @@ public class VendasController {
 		
 		venda.setUsuario(usuarioSistema.getUsuario());
 		
-		this.service.salvar(venda);
+		venda = this.service.salvar(venda);
 		
 		this.mailer.enviar(venda);
 		
-		attributes.addFlashAttribute("mensagem", "Venda salva e email enviado");
+		attributes.addFlashAttribute("mensagem", String.format("Venda nº %d salva com sucesso e email enviado", venda.getCodigo()));
 		return new ModelAndView("redirect:/vendas/nova");
 	}
 	
