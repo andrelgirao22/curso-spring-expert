@@ -46,8 +46,8 @@ public class CervejasController {
 	@Autowired
 	private CervejasRepository cervejasRepository;
 	
-	@RequestMapping("/novo")
-	public ModelAndView novo(Cerveja cerveja) {
+	@RequestMapping("/nova")
+	public ModelAndView nova(Cerveja cerveja) {
 		
 		ModelAndView modelAndView = new ModelAndView("cerveja/CadastroCerveja");
 		modelAndView.addObject("sabores", Sabor.values());
@@ -57,17 +57,17 @@ public class CervejasController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/novo", method = RequestMethod.POST)
+	@RequestMapping(value = { "/nova", "{\\d+}" }, method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result, Model model, RedirectAttributes attributes) {
 		
 		if(result.hasErrors()) {
-			return novo(cerveja);
+			return nova(cerveja);
 		}
 		
 		this.cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso");
 		
-		return new ModelAndView("redirect:/cervejas/novo");
+		return new ModelAndView("redirect:/cervejas/nova");
 	}
 	
 	@GetMapping
@@ -102,4 +102,10 @@ public class CervejasController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@GetMapping("{id}")
+	public ModelAndView editar(@PathVariable("id") Cerveja cerveja) {
+		ModelAndView mv = nova(cerveja);
+		mv.addObject(cerveja);
+		return mv; 
+	}
 }

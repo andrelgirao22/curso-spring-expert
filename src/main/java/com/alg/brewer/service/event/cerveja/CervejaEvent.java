@@ -18,4 +18,8 @@ public class CervejaEvent {
 		return !this.getCerveja().getFoto().isEmpty();
 	}
 	
+	public boolean isNovaFoto() {
+		return cerveja.isNovaFoto();
+	}
+	
 }

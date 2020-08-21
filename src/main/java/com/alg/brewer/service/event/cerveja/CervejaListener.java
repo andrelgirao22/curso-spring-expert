@@ -12,7 +12,7 @@ public class CervejaListener {
 	@Autowired
 	private FotoStorage fotoStorage;
 	
-	@EventListener(condition = "#event.hasFoto()")
+	@EventListener(condition = "#event.hasFoto() and #event.novaFoto")
 	public void cervejaSalva(CervejaEvent event) {
 		
 		System.out.println("Nova Cerveja " + event.getCerveja());
