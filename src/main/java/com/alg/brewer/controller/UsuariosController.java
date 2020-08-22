@@ -3,6 +3,7 @@ package com.alg.brewer.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.codehaus.groovy.classgen.asm.MopWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +47,7 @@ public class UsuariosController {
 		return modelAndView;
 	}
 	
-	@PostMapping(value = "/novo")
+	@PostMapping({ "/novo", "{\\+d}" })
 	public ModelAndView salvar(@Valid Usuario usuario, BindingResult result, RedirectAttributes attr) {
 		
 		if(result.hasErrors()) {
@@ -86,5 +88,14 @@ public class UsuariosController {
 	public void atualizarStatus(@RequestParam("codigos[]") Long []codigos, @RequestParam("status") StatusUsuario status) {
 		service.alterarStatus(codigos, status);
 		
+	}
+	
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable Long codigo) {
+		
+		Usuario usuario = this.service.buscarComGrupos(codigo);
+		ModelAndView mv = novo(usuario);
+		mv.addObject(usuario);
+		return mv;
 	}
 }

@@ -31,7 +31,7 @@ public class CadastroUsuarioService {
 		
 		Optional<Usuario> usuarioExist = this.repository.findByEmail(usuario.getEmail());
 		
-		if(usuarioExist.isPresent()) {
+		if(usuarioExist.isPresent() && !usuarioExist.get().equals(usuario)) {
 			throw new UsuarioException("Email já cadastrado.");
 		}
 		
@@ -39,9 +39,16 @@ public class CadastroUsuarioService {
 			throw new SenhaObrigatoriaUsuarioException("Senha é obrigatória para novo usuário");
 		}
 		
-		if(usuario.isNovo()) {			
+		if(usuario.isNovo() || !StringUtils.isEmpty(usuario.getSenha())) {			
 			usuario.setSenha(encoder.encode(usuario.getSenha()));
-			usuario.setConfirmacaoSenha(usuario.getSenha());
+		} else if(StringUtils.isEmpty(usuario.getSenha())) {
+			usuario.setSenha(usuarioExist.get().getSenha());
+		}
+		
+		usuario.setConfirmacaoSenha(usuario.getSenha());
+		
+		if(!usuario.isNovo() && usuario.getAtivo() == null) {
+			usuario.setAtivo(usuarioExist.get().getAtivo());
 		}
 		
 		this.repository.save(usuario);
@@ -55,6 +62,10 @@ public class CadastroUsuarioService {
 	@Transactional
 	public void alterarStatus(Long[] codigos, StatusUsuario status) {
 		status.executar(codigos, this.repository);
+	}
+	
+	public Usuario buscarComGrupos(Long codigo) {
+		return this.repository.buscarComGrupos(codigo);
 	}
 	
 }

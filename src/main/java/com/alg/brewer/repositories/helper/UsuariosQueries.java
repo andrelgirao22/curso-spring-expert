@@ -17,5 +17,7 @@ public interface UsuariosQueries {
 	
 	public Page<Usuario> filtrar(UsuarioFilter usuarioFilter, Pageable pageable);
 	
+	Usuario buscarComGrupos(Long codigo);
+	
 	
 }
