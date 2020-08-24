@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.filter.VendaFilter;
 import com.alg.brewer.repositories.helper.VendasQueries;
@@ -44,6 +44,18 @@ public class VendasRepositoryImpl implements VendasQueries {
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<Venda>(criteria.list(), pageable, total(filtro));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Venda buscarComItens(Long codigo) {
+		
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Venda.class);
+		criteria.createAlias("itens", "i", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", codigo));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		return (Venda) criteria.uniqueResult();
 	}
 	
 	private Long total(VendaFilter filtro) {

@@ -25,6 +25,9 @@ public class CadastroVendaService {
 		
 		if(venda.isNova()) {
 			venda.setDataCriacao(LocalDateTime.now());
+		} else {
+			Venda vendaExistente = repository.findOne(venda.getCodigo());
+			venda.setDataCriacao(vendaExistente.getDataCriacao());
 		}
 		
 		if(venda.getDataEntrega() != null) {
@@ -43,6 +46,10 @@ public class CadastroVendaService {
 
 	public Page<Venda> filtrar(VendaFilter vendaFilter, Pageable pageable) {
 		return repository.filtrar(vendaFilter, pageable);
+	}
+
+	public Venda buscarComItens(Long codigo) {
+		return repository.buscarComItens(codigo);
 	}
 
 	

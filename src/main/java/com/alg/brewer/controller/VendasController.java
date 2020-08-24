@@ -26,6 +26,7 @@ import com.alg.brewer.controller.page.PageWrapper;
 import com.alg.brewer.controller.validator.VendaValidador;
 import com.alg.brewer.mail.Mailer;
 import com.alg.brewer.model.Cerveja;
+import com.alg.brewer.model.ItemVenda;
 import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.CervejasRepository;
@@ -60,7 +61,7 @@ public class VendasController {
 	
 	@GetMapping
 	public ModelAndView pesquisar(VendaFilter vendaFilter, BindingResult result, 
-			@PageableDefault(size=3) Pageable pageable, HttpServletRequest request) {
+			@PageableDefault(size=10) Pageable pageable, HttpServletRequest request) {
 		
 		ModelAndView mv = new ModelAndView("venda/PesquisaVendas");
 		
@@ -71,13 +72,27 @@ public class VendasController {
 		return mv;
 	}
 	
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Long codigo) {
+		
+		Venda venda = service.buscarComItens(codigo);
+		
+		setUuid(venda);
+		for(ItemVenda item: venda.getItens()) {
+			tabelaItensSession.adicionarItem(venda.getUuid(), item.getCerveja(), item.getQuantidade());
+		}
+		
+		ModelAndView mv = this.nova(venda);
+		mv.addObject(venda);
+		
+		return mv;
+	}
+
 	@GetMapping("/nova")
 	public ModelAndView nova(Venda venda) {
 		ModelAndView mv = new ModelAndView("venda/CadastroVenda");
 		
-		if(StringUtils.isEmpty(venda.getUuid())) {			
-			venda.setUuid(UUID.randomUUID().toString());
-		}
+		setUuid(venda);
 		
 		mv.addObject("itens", venda.getItens());
 		mv.addObject("valorFrete", venda.getValorFrete());
@@ -169,5 +184,12 @@ public class VendasController {
 		mv.addObject("itens", tabelaItensSession.getItens(uuid));
 		mv.addObject("valorTotal", tabelaItensSession.getValorTotal(uuid));
 		return mv;
+	}
+	
+
+	private void setUuid(Venda venda) {
+		if(StringUtils.isEmpty(venda.getUuid())) {			
+			venda.setUuid(UUID.randomUUID().toString());
+		}
 	}
 }
