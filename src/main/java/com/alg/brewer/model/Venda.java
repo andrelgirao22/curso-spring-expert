@@ -217,6 +217,14 @@ public class Venda {
 		return valorTotal;
 	}
 
+	public boolean isSalvarPermitido() {
+		return !status.equals(StatusVenda.CANCELADA);
+	}
+	
+	public boolean isSalvarProibido() {
+		return !isSalvarPermitido();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

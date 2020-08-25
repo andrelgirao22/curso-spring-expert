@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -150,6 +151,19 @@ public class VendasController {
 		
 		attributes.addFlashAttribute("mensagem", String.format("Venda nº %d salva com sucesso e email enviado", venda.getCodigo()));
 		return new ModelAndView("redirect:/vendas/nova");
+	}
+	
+	@PostMapping(value = "/nova", params = "cancelar")
+	public ModelAndView cancelar(Venda venda, BindingResult result, RedirectAttributes attributes, 
+			@AuthenticationPrincipal UsuarioSistema usuarioSistema) {
+		
+		try {			
+			service.cancelar(venda);
+		} catch (AccessDeniedException e) {
+			return new ModelAndView("/403");
+		}
+		attributes.addFlashAttribute("mensagem", String.format("Venda nº %d cancelada com sucesso", venda.getCodigo()));
+		return new ModelAndView("redirect:/vendas/" + venda.getCodigo());
 	}
 	
 	@PostMapping("/item")
