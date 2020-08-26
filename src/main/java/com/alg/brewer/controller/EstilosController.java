@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,11 +22,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alg.brewer.controller.page.PageWrapper;
+import com.alg.brewer.model.Cidade;
 import com.alg.brewer.model.Estilo;
 import com.alg.brewer.repositories.EstilosRepository;
 import com.alg.brewer.repositories.filter.EstiloFilter;
 import com.alg.brewer.service.CadastroEstiloService;
 import com.alg.brewer.service.exception.EstiloException;
+import com.alg.brewer.service.exception.ImpossivelExcluirEntidadeException;
 
 @Controller
 @RequestMapping("/estilos")
@@ -40,6 +44,14 @@ public class EstilosController {
 	public ModelAndView novo(Estilo estilo) {
 		ModelAndView modelAndView = new ModelAndView("estilo/CadastroEstilo");
 		return modelAndView;
+	}
+	
+	@GetMapping("{id}")
+	public ModelAndView editar(@PathVariable("id") Estilo estilo) {
+		estilo = repository.findOne(estilo.getId());
+		ModelAndView mv = novo(estilo);
+		mv.addObject(estilo);
+		return mv;
 	}
 	
 	@RequestMapping(value = "/novo", method = RequestMethod.POST)
@@ -83,6 +95,17 @@ public class EstilosController {
 		modelAndView.addObject("pagina", pagina);
 		
 		return modelAndView;
+	}
+	
+	@DeleteMapping("{id}")
+	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("id") Estilo estilo) {
+		try {
+			service.excluir(estilo);
+		}catch (ImpossivelExcluirEntidadeException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }

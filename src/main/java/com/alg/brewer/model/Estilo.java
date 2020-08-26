@@ -41,6 +41,10 @@ public class Estilo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public boolean isNovo() {
+		return getId() == null;
+	}
 
 	@Override
 	public int hashCode() {
