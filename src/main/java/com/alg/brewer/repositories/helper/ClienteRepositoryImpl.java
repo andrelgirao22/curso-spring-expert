@@ -66,4 +66,14 @@ public class ClienteRepositoryImpl implements ClientesQueries {
 		}
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public Cliente buscaComEstado(Long codigo) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
+		criteria.createAlias("endereco.cidade", "c", JoinType.LEFT_OUTER_JOIN);
+		criteria.createAlias("c.estado", "e", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", codigo));
+		return (Cliente) criteria.uniqueResult();
+	}
+
 }

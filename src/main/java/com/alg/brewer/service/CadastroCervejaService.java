@@ -33,7 +33,6 @@ public class CadastroCervejaService {
 		this.publisher.publishEvent(new CervejaEvent(cerveja));
 	}
 
-
 	@Transactional
 	public void excluir(Cerveja cerveja) {
 		

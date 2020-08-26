@@ -9,5 +9,7 @@ import com.alg.brewer.repositories.filter.ClienteFilter;
 public interface ClientesQueries {
 
 	public Page<Cliente> filtrar(ClienteFilter filter, Pageable pageable);
+	
+	public Cliente buscaComEstado(Long codigo);
 }
 

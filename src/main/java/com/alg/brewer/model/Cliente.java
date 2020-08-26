@@ -137,6 +137,10 @@ public class Cliente implements Serializable {
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
+	
+	public boolean isNovo() {
+		return getCodigo() == null;
+	}
 
 	@Override
 	public int hashCode() {
