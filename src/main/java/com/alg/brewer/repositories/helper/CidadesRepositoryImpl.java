@@ -43,6 +43,15 @@ public class CidadesRepositoryImpl implements CidadesQueries {
 		return new PageImpl<Cidade>(criteria.list(), pageable, total(filtro));
 	}
 	
+	@Transactional(readOnly = true)
+	@Override
+	public Cidade buscarComEstado(Long id) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cidade.class);
+		criteria.createAlias("estado", "e", JoinType.LEFT_OUTER_JOIN);
+		criteria.add(Restrictions.eq("codigo", id));
+		return (Cidade) criteria.uniqueResult();
+	}
+	
 	private Long total(CidadeFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cidade.class);
 		adicionarFiltro(filtro, criteria);
