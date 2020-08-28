@@ -13,7 +13,5 @@ import com.alg.brewer.repositories.helper.VendasQueries;
 public interface VendasRepository extends JpaRepository<Venda, Long> , VendasQueries {
 
 	Page<Venda> filtrar(VendaFilter vendaFilter, Pageable pageable);
-
-	
 	
 }

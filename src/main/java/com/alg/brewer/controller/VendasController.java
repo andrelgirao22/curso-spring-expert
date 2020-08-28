@@ -1,5 +1,6 @@
 package com.alg.brewer.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,17 +21,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alg.brewer.controller.page.PageWrapper;
 import com.alg.brewer.controller.validator.VendaValidador;
+import com.alg.brewer.dto.VendaMes;
 import com.alg.brewer.mail.Mailer;
 import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.model.ItemVenda;
 import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.CervejasRepository;
+import com.alg.brewer.repositories.VendasRepository;
 import com.alg.brewer.repositories.filter.VendaFilter;
 import com.alg.brewer.security.UsuarioSistema;
 import com.alg.brewer.service.CadastroVendaService;
@@ -48,6 +52,9 @@ public class VendasController {
 	
 	@Autowired
 	private CadastroVendaService service;
+	
+	@Autowired
+	private VendasRepository repository;
 	
 	@Autowired
 	private VendaValidador vendaValidador;
@@ -151,6 +158,11 @@ public class VendasController {
 		
 		attributes.addFlashAttribute("mensagem", String.format("Venda nº %d salva com sucesso e email enviado", venda.getCodigo()));
 		return new ModelAndView("redirect:/vendas/nova");
+	}
+	
+	@GetMapping("/totalPorMes")
+	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
+		return repository.totalPorMes();
 	}
 	
 	@PostMapping(value = "/nova", params = "cancelar")
