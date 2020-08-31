@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.alg.brewer.controller.page.PageWrapper;
 import com.alg.brewer.controller.validator.VendaValidador;
 import com.alg.brewer.dto.VendaMes;
+import com.alg.brewer.dto.VendaOrigem;
 import com.alg.brewer.mail.Mailer;
 import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.model.ItemVenda;
@@ -163,6 +164,11 @@ public class VendasController {
 	@GetMapping("/totalPorMes")
 	public @ResponseBody List<VendaMes> listarTotalVendaPorMes() {
 		return repository.totalPorMes();
+	}
+	
+	@GetMapping("/porOrigem")
+	public @ResponseBody List<VendaOrigem> listarPorOrigem() {
+		return repository.totalPorOrigem();
 	}
 	
 	@PostMapping(value = "/nova", params = "cancelar")

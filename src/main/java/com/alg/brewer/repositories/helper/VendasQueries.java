@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.alg.brewer.dto.VendaMes;
+import com.alg.brewer.dto.VendaOrigem;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.filter.VendaFilter;
 
@@ -20,4 +21,6 @@ public interface VendasQueries {
 	public BigDecimal valorTotalMes();
 	public List<VendaMes> totalPorMes();
 	public BigDecimal valorTicketMedioAno();
+	
+	public List<VendaOrigem> totalPorOrigem();
 }

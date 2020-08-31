@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.alg.brewer.dto.VendaMes;
+import com.alg.brewer.dto.VendaOrigem;
 import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.filter.VendaFilter;
@@ -82,6 +83,26 @@ public class VendasRepositoryImpl implements VendasQueries {
 			hoje = hoje.minusMonths(1);
 		}
 		return vendas;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VendaOrigem> totalPorOrigem() {
+		List<VendaOrigem> origens= manager.createNamedQuery("Vendas.porOrigem").getResultList();
+		
+		LocalDate now = LocalDate.now();
+		for (int i = 1; i <= 6; i++) {
+			String mesIdeal = String.format("%d/%02d", now.getYear(), now.getMonth().getValue());
+			
+			boolean possuiMes = origens.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
+			if (!possuiMes) {
+				origens.add(i - 1, new VendaOrigem(mesIdeal, 0, 0));
+			}
+			
+			now = now.minusMonths(1);
+		}
+		
+		return origens;
 	}
 	
 	private Long total(VendaFilter filtro) {

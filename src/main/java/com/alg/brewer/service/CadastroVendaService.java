@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import com.alg.brewer.model.StatusVenda;
 import com.alg.brewer.model.Venda;
 import com.alg.brewer.repositories.VendasRepository;
 import com.alg.brewer.repositories.filter.VendaFilter;
+import com.alg.brewer.service.event.venda.VendaEvent;
 
 @Service
 @DynamicUpdate
@@ -22,6 +24,9 @@ public class CadastroVendaService {
 
 	@Autowired
 	private VendasRepository repository;
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	@Transactional
 	public Venda salvar(Venda venda) {
@@ -49,6 +54,9 @@ public class CadastroVendaService {
 	public void emitir(Venda venda) {
 		venda.setStatus(StatusVenda.EMITIDA);
 		this.salvar(venda);
+		
+		this.publisher.publishEvent(new VendaEvent(venda));
+		
 	}
 
 	public Page<Venda> filtrar(VendaFilter vendaFilter, Pageable pageable) {

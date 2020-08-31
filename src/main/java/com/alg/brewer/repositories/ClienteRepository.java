@@ -15,5 +15,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> , Client
 	public Optional<Cliente> findByCpfOuCnpj(String cpfOuCnpj);
 
 	public List<Cliente> findByNomeStartingWith(String nome);
+	
+	public long count();
 
 }
