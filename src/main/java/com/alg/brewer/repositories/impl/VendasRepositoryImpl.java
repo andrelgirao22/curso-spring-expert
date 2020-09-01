@@ -73,7 +73,7 @@ public class VendasRepositoryImpl implements VendasQueries {
 		List<VendaMes> vendas = manager.createNamedQuery("Vendas.totalPorMes").getResultList();
 		LocalDate hoje = LocalDate.now();
 		
-		for(int i = 0; i <=6; i++) {
+		for(int i = 1; i <=6; i++) {
 			
 			String mesIdeal = String.format("%d/%02d", hoje.getYear(), hoje.getMonthValue());
 			boolean possuiMes = vendas.stream().filter(v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
