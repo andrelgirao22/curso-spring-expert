@@ -23,6 +23,7 @@ import com.alg.brewer.model.Cerveja;
 import com.alg.brewer.repositories.filter.CervejaFilter;
 import com.alg.brewer.repositories.helper.CervejasQueries;
 import com.alg.brewer.repositories.paginacao.PaginacaoUtil;
+import com.alg.brewer.storage.FotoStorage;
 
 public class CervejasRepositoryImpl implements CervejasQueries {
 
@@ -31,6 +32,9 @@ public class CervejasRepositoryImpl implements CervejasQueries {
 	
 	@Autowired
 	private PaginacaoUtil paginacaoUtil;
+	
+	@Autowired
+	private FotoStorage fotoStorage;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -44,6 +48,19 @@ public class CervejasRepositoryImpl implements CervejasQueries {
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<Cerveja>(criteria.list(), pageable, total(filtro));
+	}
+	
+	@Override
+	public List<CervejaDTO> porSkuOuNome(String skuOuNome) {
+		String jpql = "select new com.alg.brewer.dto.CervejaDTO(id, sku, nome, origem, valor, foto) "
+				+ "from Cerveja where lower(sku) like lower(:skuOuNome) or lower(nome) like lower(:skuOuNome)";
+		List<CervejaDTO> cervejasListadas = this.manager.createQuery(jpql, CervejaDTO.class)
+				.setParameter("skuOuNome", skuOuNome + "%")
+				.getResultList();
+		
+		cervejasListadas.forEach(c -> c.setUrlThumbnailFoto(fotoStorage.getUrl(FotoStorage.THUMBNAIL_PREFIX + c.getFoto())));
+		
+		return cervejasListadas;
 	}
 	
 	@Override
@@ -94,17 +111,4 @@ public class CervejasRepositoryImpl implements CervejasQueries {
 	private boolean isEstiloPresente(CervejaFilter filtro) {
 		return filtro.getEstilo() != null && filtro.getEstilo().getId() != null;
 	}
-
-	@Override
-	public List<CervejaDTO> porSkuOuNome(String skuOuNome) {
-		String jpql = "select new com.alg.brewer.dto.CervejaDTO(id, sku, nome, origem, valor, foto) "
-				+ "from Cerveja where lower(sku) like lower(:skuOuNome) or lower(nome) like lower(:skuOuNome)";
-		List<CervejaDTO> cervejasListadas = this.manager.createQuery(jpql, CervejaDTO.class)
-				.setParameter("skuOuNome", skuOuNome + "%")
-				.getResultList();
-		
-		
-		return cervejasListadas;
-	}
-
 }
