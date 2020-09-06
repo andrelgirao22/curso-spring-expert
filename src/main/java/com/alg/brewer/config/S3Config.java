@@ -28,7 +28,7 @@ public class S3Config {
 		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		
 		AmazonS3 amazonS3 = new AmazonS3Client(credentials, new ClientConfiguration());
-		Region region = Region.getRegion(Regions.US_EAST_1);
+		Region region = Region.getRegion(Regions.SA_EAST_1);
 		amazonS3.setRegion(region);
 		
 		return amazonS3;

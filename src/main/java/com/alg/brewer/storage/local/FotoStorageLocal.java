@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,17 +104,4 @@ public class FotoStorageLocal implements FotoStorage {
 		}
 		
 	}
-	
-	
-	private String renomearArquivo(String nomeOriginal) {
-		String nomeArquivo = UUID.randomUUID().toString() + "_" + nomeOriginal;
-		
-		if(logger.isDebugEnabled()) {
-			logger.debug("Novo nome do arquivo " + nomeArquivo);
-		}
-		
-		return nomeArquivo;
-	}
-
-
 }

@@ -1,5 +1,7 @@
 package com.alg.brewer.storage;
 
+import java.util.UUID;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FotoStorage {
@@ -15,5 +17,9 @@ public interface FotoStorage {
 	void excluir(String foto);
 
 	String getUrl(String foto);
+	
+	default String renomearArquivo(String nomeOriginal) {
+		return UUID.randomUUID().toString() + "_" + nomeOriginal;
+	}
 	
 }
