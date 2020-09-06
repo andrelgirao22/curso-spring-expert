@@ -16,7 +16,7 @@ import com.alg.brewer.mail.Mailer;
 @Configuration
 @ComponentScan(basePackageClasses =  Mailer.class)
 @PropertySource({"classpath:env/mail-${envTarget:local}.properties"})
-//@PropertySource(value = { "file:\\${USERPROFILE}\\.brewer-mail.properties" }, ignoreResourceNotFound = true)
+@PropertySource(value = { "file:\\${USERPROFILE}\\.brewer-mail.properties" }, ignoreResourceNotFound = true)
 public class MailConfig {
 
 	@Autowired
@@ -29,9 +29,7 @@ public class MailConfig {
 		mailSenderImpl.setHost("smtp.gmail.com");
 		mailSenderImpl.setPort(587);
 		mailSenderImpl.setUsername(env.getProperty("email.username"));
-		mailSenderImpl.setPassword(env.getProperty("email.password"));
-		
-		System.out.println("user " + env.getProperty("email.password"));
+		mailSenderImpl.setPassword(env.getProperty("SENDGRID_PASSWORD"));
 		
 		Properties props = new Properties();
 		props.put("mail.transport.protocol", "smtp");

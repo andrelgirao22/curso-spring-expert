@@ -6,7 +6,6 @@ C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\serv
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\config\WebConfig.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\helper\EstilosQueries.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\config\init\SecurityInitializaer.java
-C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\event\cerveja\CervejaListener.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\model\TipoPessoa.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\model\ItemVenda.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\session\TabelaItensVenda.java
@@ -24,7 +23,6 @@ C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\serv
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\filter\EstiloFilter.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\CadastroClienteService.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\helper\CervejasQueries.java
-C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\event\cerveja\CervejaEvent.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\model\Origem.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\helper\VendasQueries.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\CadastroEstiloService.java
@@ -39,6 +37,7 @@ C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\mode
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\dto\VendaOrigem.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\config\MailConfig.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\controller\ErrosController.java
+C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\config\S3Config.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\controller\DashboardController.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\exception\SenhaObrigatoriaUsuarioException.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\controller\validator\VendaValidador.java
@@ -84,9 +83,11 @@ C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\conf
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\model\validation\group\CpfGroup.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\model\Venda.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\thymeleaf\processor\OrderElementTagProcessor.java
+C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\storage\s3\FotoStorageS3.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\ClienteRepository.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\helper\EstilosRepositoryImpl.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\CervejasRepository.java
+C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\repositories\listener\CervejaEntityListener.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\service\exception\EstiloException.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\storage\FotosStorageRunnable.java
 C:\Users\andrelgirao\projetos-cursos-ws\brewer\src\main\java\com\alg\brewer\thymeleaf\BrewerDialect.java

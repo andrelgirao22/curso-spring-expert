@@ -1,4 +1,3 @@
-com\alg\brewer\service\event\cerveja\CervejaListener.class
 com\alg\brewer\config\WebConfig.class
 com\alg\brewer\dto\CervejaDTO.class
 com\alg\brewer\model\TipoPessoa$2.class
@@ -32,12 +31,12 @@ com\alg\brewer\model\Cliente.class
 com\alg\brewer\model\validation\group\CnpjGroup.class
 com\alg\brewer\session\TabelaItensSession.class
 com\alg\brewer\controller\converter\EstiloConverter.class
-com\alg\brewer\service\event\cerveja\CervejaEvent.class
 com\alg\brewer\config\BigDecimalFormatter.class
 com\alg\brewer\mail\Mailer.class
 com\alg\brewer\model\Estado.class
 com\alg\brewer\service\StatusUsuario$2.class
 com\alg\brewer\repositories\helper\ClienteRepositoryImpl.class
+com\alg\brewer\storage\s3\FotoStorageS3.class
 com\alg\brewer\service\exception\CidadeException.class
 com\alg\brewer\thymeleaf\BrewerDialect.class
 com\alg\brewer\model\TipoPessoa$1.class
@@ -100,6 +99,7 @@ com\alg\brewer\controller\EstilosController.class
 com\alg\brewer\repositories\VendasRepository.class
 com\alg\brewer\controller\VendasController.class
 com\alg\brewer\repositories\impl\UsuariosRepositoryImpl.class
+com\alg\brewer\repositories\listener\CervejaEntityListener.class
 com\alg\brewer\controller\UsuariosController.class
 com\alg\brewer\service\exception\CpfCnpjClienteJaCadastradoException.class
 com\alg\brewer\service\CadastroCidadeService.class
@@ -112,5 +112,6 @@ com\alg\brewer\model\validation\AtributoConfirmacao.class
 com\alg\brewer\controller\ErrosController.class
 com\alg\brewer\controller\SegurancaController.class
 com\alg\brewer\thymeleaf\processor\ClassForErrorAttributeTagProcessor.class
+com\alg\brewer\config\S3Config.class
 com\alg\brewer\repositories\paginacao\PaginacaoUtil.class
 com\alg\brewer\security\AppUserDetailsService.class
