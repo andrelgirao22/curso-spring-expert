@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alg.brewer.storage.FotoStorage;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.GroupGrantee;
 import com.amazonaws.services.s3.model.ObjectMetadata;
